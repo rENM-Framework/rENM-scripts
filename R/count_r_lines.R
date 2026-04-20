@@ -166,7 +166,7 @@ for (i in seq_along(pkg_dirs)) {
       append = TRUE)
 
   cat(
-    sprintf("Total lines   : %d\n", totals["total"]),
+    sprintf("Total lines    : %d\n", totals["total"]),
     sprintf("Code lines    : %d\n", totals["code"]),
     sprintf("Comment lines : %d\n", totals["comment"]),
     sprintf("Blank lines   : %d\n\n", totals["blank"]),
