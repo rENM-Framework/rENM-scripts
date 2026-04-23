@@ -18,6 +18,7 @@
 #'   \item \code{rENM.analysis}
 #'   \item \code{rENM.ai}
 #'   \item \code{rENM.reports}
+#'   \item \code{rENM.dev}
 #' }
 #'
 #' For the supplied species alpha code, the function runs the complete
@@ -103,7 +104,8 @@ rENM <- function(alpha_code) {
     "rENM.model",
     "rENM.analysis",
     "rENM.ai",
-    "rENM.reports"
+    "rENM.reports",
+    "rENM.dev"
   )
 
   missing_pkgs <- .required_pkgs[
@@ -181,6 +183,10 @@ rENM <- function(alpha_code) {
 
   tryCatch({
 
+    # --------------------------------------------------------------------------
+
+    # --- DATA ASSEMBLY ---
+
     # extract ebird occurrence records from the base collection
     rENM.data::get_ebird_occurrences(alpha_code)
 
@@ -202,16 +208,15 @@ rENM <- function(alpha_code) {
     # extract merra variables and move to the run directory
     rENM.data::get_merra_variables(alpha_code)
 
-    # move prepared occurrence files from the <alpha_code>/_occs/ directory
-    #   to 5-year bins within the <alpha_code>/TimeSeries/occs/ directory
+    # --- TIME SERIES CONSTRUCTION ---
+
+    # stage occurrence data
     rENM.model::stage_occurrences(alpha_code)
 
     # down select variables (maxnet version)
     rENM.model::screen_by_convergence2(alpha_code)
 
-    # move the down selected, cropped environmental variables from the
-    #   <alpha_code>/_vars/ directory to 5-year bins within the
-    #   <alpha_code>/TimeSeries/vars/ directory
+    # stage screened variables
     rENM.model::stage_screened_variables(alpha_code)
 
     # reduce covariance among staged variables
@@ -219,6 +224,8 @@ rENM <- function(alpha_code) {
 
     # create an rENM time series
     rENM.model::create_timeseries(alpha_code)
+
+    # --- TIME SERIES ANALYSIS ---
 
     # compute the thiel-sen trend across the time series
     rENM.analysis::find_suitability_trend(alpha_code)
@@ -252,6 +259,11 @@ rENM <- function(alpha_code) {
 
     # create a hot spot map
     rENM.analysis::create_hot_spot_map(alpha_code)
+
+    # gather time series suitability maps
+    rENM.reports::gather_suitability_maps(alpha_code)
+
+    # --- REPORT GENERATION ---
 
     # gather time series suitability maps
     rENM.reports::gather_suitability_maps(alpha_code)
@@ -295,17 +307,23 @@ rENM <- function(alpha_code) {
     # create a suitability trends with centroids page
     rENM.reports::assemble_centroid_trends_page(alpha_code)
 
-    # build a data package for submission to ChatGPT
-    rENM.ai::assemble_suitability_ai_package(alpha_code)
+    # --- GenAI ANALYSIS ---
 
-    # submit the package using the OpenAI Responses API
-    rENM.ai::submit_suitability_ai_package(alpha_code)
+    # build a data package for submission to ChatGPT
+    rENM.dev::assemble_ai_package(alpha_code)
+
+    # submit the package using the OpenAI Reponses API
+    rENM.dev::submit_ai_package(alpha_code)
 
     # render the returned .docx file into a .pdf file
-    rENM.ai::render_ai_docs(alpha_code)
+    rENM.dev::render_ai_docx(alpha_code)
+
+    # --- CREATE FINAL REPORT ---
 
     # create a final report comprising all summary pages
     rENM.reports::assemble_final_report(alpha_code)
+
+    # --------------------------------------------------------------------------
 
     end_time <- Sys.time()
     elapsed_time <- end_time - start_time
@@ -341,3 +359,16 @@ rENM <- function(alpha_code) {
     stop(e)
   })
 }
+
+# ------------------------------------------------------------------------------
+
+# load rENM framework packages
+library(rENM.core)
+library(rENM.data)
+library(rENM.model)
+library(rENM.analysis)
+library(rENM.ai)
+library(rENM.reports)
+library(rENM.dev)
+
+rENM("BCRF")
