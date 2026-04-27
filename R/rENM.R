@@ -104,8 +104,7 @@ rENM <- function(alpha_code) {
     "rENM.model",
     "rENM.analysis",
     "rENM.ai",
-    "rENM.reports",
-    "rENM.dev"
+    "rENM.reports"
   )
 
   missing_pkgs <- .required_pkgs[
@@ -183,9 +182,11 @@ rENM <- function(alpha_code) {
 
   tryCatch({
 
-    # --------------------------------------------------------------------------
+    # ==========================================================================
+    # rENM processing pipeline ...
+    # ==========================================================================
 
-    # --- DATA ASSEMBLY ---
+    # --- DATA ASSEMBLY --------------------------------------------------------
 
     # extract ebird occurrence records from the base collection
     rENM.data::get_ebird_occurrences(alpha_code)
@@ -208,7 +209,7 @@ rENM <- function(alpha_code) {
     # extract merra variables and move to the run directory
     rENM.data::get_merra_variables(alpha_code)
 
-    # --- TIME SERIES CONSTRUCTION ---
+    # --- TIME SERIES CONSTRUCTION ---------------------------------------------
 
     # stage occurrence data
     rENM.model::stage_occurrences(alpha_code)
@@ -225,7 +226,7 @@ rENM <- function(alpha_code) {
     # create an rENM time series
     rENM.model::create_timeseries(alpha_code)
 
-    # --- TIME SERIES ANALYSIS ---
+    # --- TIME SERIES ANALYSIS -------------------------------------------------
 
     # compute the thiel-sen trend across the time series
     rENM.analysis::find_suitability_trend(alpha_code)
@@ -263,7 +264,7 @@ rENM <- function(alpha_code) {
     # gather time series suitability maps
     rENM.reports::gather_suitability_maps(alpha_code)
 
-    # --- REPORT GENERATION ---
+    # --- REPORT GENERATION ----------------------------------------------------
 
     # gather time series suitability maps
     rENM.reports::gather_suitability_maps(alpha_code)
@@ -307,7 +308,7 @@ rENM <- function(alpha_code) {
     # create a suitability trends with centroids page
     rENM.reports::assemble_centroid_trends_page(alpha_code)
 
-    # --- GenAI ANALYSIS ---
+    # --- GenAI ANALYSIS -------------------------------------------------------
 
     # build a data package for submission to ChatGPT
     rENM.ai::assemble_ai_package(alpha_code)
@@ -318,12 +319,12 @@ rENM <- function(alpha_code) {
     # render the returned .docx file into a .pdf file
     rENM.ai::render_ai_docx(alpha_code)
 
-    # --- CREATE FINAL REPORT ---
+    # --- CREATE FINAL REPORT --------------------------------------------------
 
     # create a final report comprising all summary pages
     rENM.reports::assemble_final_report(alpha_code)
 
-    # --------------------------------------------------------------------------
+    # ==========================================================================
 
     end_time <- Sys.time()
     elapsed_time <- end_time - start_time
@@ -360,7 +361,9 @@ rENM <- function(alpha_code) {
   })
 }
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# main
+# ==============================================================================
 
 # load rENM framework packages
 library(rENM.core)
@@ -372,6 +375,6 @@ library(rENM.reports)
 
 # alpha_code <- "BCRF"
 # alpha_code <- "CASP"
-# alpha_code <- "GRRO"
+alpha_code <- "GRRO"
 
 rENM(alpha_code)
