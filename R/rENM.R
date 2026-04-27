@@ -310,13 +310,13 @@ rENM <- function(alpha_code) {
     # --- GenAI ANALYSIS ---
 
     # build a data package for submission to ChatGPT
-    rENM.dev::assemble_ai_package(alpha_code)
+    rENM.ai::assemble_ai_package(alpha_code)
 
     # submit the package using the OpenAI Reponses API
-    rENM.dev::submit_ai_package(alpha_code)
+    rENM.ai::submit_ai_package(alpha_code)
 
     # render the returned .docx file into a .pdf file
-    rENM.dev::render_ai_docx(alpha_code)
+    rENM.ai::render_ai_docx(alpha_code)
 
     # --- CREATE FINAL REPORT ---
 
@@ -369,8 +369,9 @@ library(rENM.model)
 library(rENM.analysis)
 library(rENM.ai)
 library(rENM.reports)
-library(rENM.dev)
 
-alpha_code <- "GRRO"
+# alpha_code <- "BCRF"
+# alpha_code <- "CASP"
+# alpha_code <- "GRRO"
 
 rENM(alpha_code)
