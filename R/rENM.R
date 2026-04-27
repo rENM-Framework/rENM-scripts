@@ -371,4 +371,6 @@ library(rENM.ai)
 library(rENM.reports)
 library(rENM.dev)
 
-rENM("BCRF")
+alpha_code <- "GRRO"
+
+rENM(alpha_code)
