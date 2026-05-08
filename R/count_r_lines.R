@@ -1,4 +1,4 @@
-#' rENM Ffamework codebase summary and line count audit
+#' rENM Framework codebase summary and line count audit
 #'
 #' This script provides a reproducible, audit-ready summary of the size and
 #' structure of an rENM framework codebase composed of multiple R packages.

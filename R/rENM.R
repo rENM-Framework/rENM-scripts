@@ -186,6 +186,7 @@ rENM <- function(alpha_code) {
     # rENM processing pipeline ...
     # ==========================================================================
 
+    # --------------------------------------------------------------------------
     # --- DATA ASSEMBLY --------------------------------------------------------
 
     # extract ebird occurrence records from the base collection
@@ -209,6 +210,8 @@ rENM <- function(alpha_code) {
     # extract merra variables and move to the run directory
     rENM.data::get_merra_variables(alpha_code)
 
+
+    # --------------------------------------------------------------------------
     # --- TIME SERIES CONSTRUCTION ---------------------------------------------
 
     # stage occurrence data
@@ -226,6 +229,8 @@ rENM <- function(alpha_code) {
     # create an rENM time series
     rENM.model::create_timeseries(alpha_code)
 
+
+    # --------------------------------------------------------------------------
     # --- TIME SERIES ANALYSIS -------------------------------------------------
 
     # compute the thiel-sen trend across the time series
@@ -261,9 +266,8 @@ rENM <- function(alpha_code) {
     # create a hot spot map
     rENM.analysis::create_hot_spot_map(alpha_code)
 
-    # gather time series suitability maps
-    rENM.reports::gather_suitability_maps(alpha_code)
 
+    # --------------------------------------------------------------------------
     # --- REPORT GENERATION ----------------------------------------------------
 
     # gather time series suitability maps
@@ -308,21 +312,29 @@ rENM <- function(alpha_code) {
     # create a suitability trends with centroids page
     rENM.reports::assemble_centroid_trends_page(alpha_code)
 
+
+    # --------------------------------------------------------------------------
     # --- GenAI ANALYSIS -------------------------------------------------------
 
-    # build a data package for submission to ChatGPT
+    # build a data and prompt submission package
     rENM.ai::assemble_ai_package(alpha_code)
 
-    # submit the package using the OpenAI Reponses API
-    rENM.ai::submit_ai_package(alpha_code)
+    # submit the package to chatgpt
+    rENM.ai::submit_to_chatgpt(alpha_code)
+
+    # submit the package to claude
+    # rENM.ai::submit_to_claude(alpha_code)
 
     # render the returned .docx file into a .pdf file
     rENM.ai::render_ai_docx(alpha_code)
 
+
+    # --------------------------------------------------------------------------
     # --- CREATE FINAL REPORT --------------------------------------------------
 
     # create a final report comprising all summary pages
     rENM.reports::assemble_final_report(alpha_code)
+
 
     # ==========================================================================
 
@@ -361,6 +373,7 @@ rENM <- function(alpha_code) {
   })
 }
 
+
 # ==============================================================================
 # main
 # ==============================================================================
@@ -373,8 +386,8 @@ library(rENM.analysis)
 library(rENM.ai)
 library(rENM.reports)
 
-# alpha_code <- "BCRF"
+alpha_code <- "BCRF"
 # alpha_code <- "CASP"
-alpha_code <- "GRRO"
+# alpha_code <- "GRRO"
 
 rENM(alpha_code)

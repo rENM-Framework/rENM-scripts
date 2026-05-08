@@ -1,6 +1,18 @@
+# R project files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# macOS metadata
 .DS_Store
+**/.DS_Store
+
+# R plot output
 Rplots.pdf
+
+# Quarto build artifacts
+/_site/
+/.quarto/
+*_cache/
+*_files/
