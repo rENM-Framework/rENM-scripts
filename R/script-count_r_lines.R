@@ -130,12 +130,13 @@ summary_file <- file.path(project_directory, "framework", "framework_summary_det
 csv_file     <- file.path(project_directory, "framework", "framework_summary_totals.csv")
 
 pkg_dirs <- c(
+  "~/rENM/framework/rENM",
   "~/rENM/framework/rENM.core",
   "~/rENM/framework/rENM.data",
   "~/rENM/framework/rENM.model",
   "~/rENM/framework/rENM.analysis",
-  "~/rENM/framework/rENM.ai",
-  "~/rENM/framework/rENM.reports"
+  "~/rENM/framework/rENM.reports",
+  "~/rENM/framework/rENM.ai"
 )
 
 pkg_dirs  <- normalizePath(pkg_dirs, mustWork = TRUE)
