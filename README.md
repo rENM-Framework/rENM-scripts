@@ -13,14 +13,14 @@ This repository contains R and bash scripts that support the rENM Framework — 
 ### R scripts
 
 | File | Description |
-|------------------------------------|------------------------------------|
+|----|----|
 | `R/rENM.R` | End-to-end pipeline orchestration — runs the complete rENM workflow for a single species |
 | `R/count_r_lines.R` | Codebase audit — counts and classifies lines across all rENM package source files |
 
 ### Bash scripts
 
 | File | Description |
-|------------------------------------|------------------------------------|
+|----|----|
 | `bash/create_project_directory.sh` | Create the rENM project directory structure |
 | `bash/install_example_data.sh` | Download and install the rENM example dataset |
 
@@ -63,7 +63,7 @@ Output is written to:
 
 ## Contact
 
-John Schnase — [rENM.Framework\@gmail.com](mailto:rENM.Framework@gmail.com){.email}
+John Schnase — [rENM.Framework\@gmail.com](mailto:rENM.Framework@gmail.com)
 
 ## License
 
