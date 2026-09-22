@@ -14,8 +14,9 @@ This repository contains R and bash scripts that support the rENM Framework — 
 
 | File | Description |
 |----|----|
-| `R/rENM.R` | End-to-end pipeline orchestration — runs the complete rENM workflow for a single species |
 | `R/count_r_lines.R` | Codebase audit — counts and classifies lines across all rENM package source files |
+| `R/run_batch.R` | Batch orchestration - runs the rENM pipeline over several species unattended |
+| `R/summarize_run.R` | Directory summary - traverses a species run directory and writes a technical summary |
 
 ### Bash scripts
 
