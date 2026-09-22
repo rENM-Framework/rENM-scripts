@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repository contains R and bash scripts that support the rENM Framework — a modular suite of R packages for reconstructing and analyzing long-term ecological niche dynamics using historical species occurrence records and environmental data.
+This repository contains R and bash scripts that support work on the rENM Framework — a modular suite of R packages for reconstructing and analyzing long-term ecological niche dynamics using historical species occurrence records and environmental data.
 
 ## Contents
 
