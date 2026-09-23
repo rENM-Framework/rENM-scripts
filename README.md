@@ -38,16 +38,26 @@ By default both scripts target `~/rENMtest`. Edit the `PROJECT_DIRECTORY` variab
 
 ## Running the pipeline
 
-`rENM.R` wraps the complete six-package rENM pipeline into a single function call. After installing the rENM Framework packages and configuring your project directory, source the script and call `rENM()` with a four-letter bird banding code:
+The pipeline lives in the `rENM` package, not in this repository. After installing the framework packages and configuring your project directory, a single species runs from the R console:
 
 ``` r
-source("R/rENM.R")
+library(rENM)
 rENM("CASP")
 ```
 
-Edit the `alpha_code` variable near the bottom of the script to change the target species. The pipeline runs all stages in sequence — data assembly, time-series modeling, trend analysis, report generation, and AI synthesis — and logs progress and elapsed time to `<project_dir>/runs/<alpha_code>/_log.txt`.
+`rENM()` runs all stages in sequence and logs progress and elapsed time to `<project_dir>/runs/<alpha_code>/_log.txt`. It takes a `seed` argument, defaulting to 42, which makes a run reproducible, and an `ai` argument selecting `"chatgpt"`, `"claude"`, or `NULL` for no generated narrative. Enter `?rENM` for details, and see the [User Manual](https://github.com/rENM-Framework/rENM-documentation) for installation, configuration, and a step-by-step walkthrough.
 
-Individual pipeline steps can be commented out to run a partial workflow. `reduce_covariance()` and `submit_to_claude()` are already commented out in the default configuration; uncomment them as needed.
+## Batch runs
+
+`run_batch.R` runs the pipeline over several species unattended:
+
+``` r
+source("R/run_batch.R")
+run_rENM_batch(c("PIJA", "GRWA", "CASP"))
+run_rENM_batch(c("PIJA"), seed = NULL)   # non-reproducible run
+```
+
+`rENM()` logs a failure and then re-raises it, so an unguarded loop would stop at the first bad species and abandon the rest. Each call is wrapped here, so one failure costs one species rather than the batch. Progress is written to `runs/_batch_log.txt` as well as the console, since an unattended run outlives the console buffer.
 
 ## Codebase audit
 
